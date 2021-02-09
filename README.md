@@ -8,8 +8,8 @@ Niche Hero is currently only offered on **WordPress** but will be developed on o
 
 ## Intergrations
 
-- [https://en-ca.wordpress.org/plugins/post-views-counter/](Post Views Counter): Enable editable post views on any post type.
-- [https://fontawesome.com/](Font Awesome): Utilizing free icons on each post to enhance website aesthetics.
+- [Post Views Counter](https://en-ca.wordpress.org/plugins/post-views-counter/): Enable editable post views on any post type.
+- [Font Awesome](https://fontawesome.com/): Utilizing free icons on each post to enhance website aesthetics.
 
 ## Contact
 
