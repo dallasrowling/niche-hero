@@ -1,4 +1,4 @@
-![alt text](https://github.com/dallasrowling/niche-hero/blob/main/assets/images/NICHE%20HERO.png?raw=true)
+![Niche Hero](https://github.com/dallasrowling/niche-hero/blob/main/assets/images/niche-hero.png?raw=true)
 
 
 # Niche Hero
