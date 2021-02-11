@@ -1,5 +1,6 @@
+<p align="center">
 ![Niche Hero](https://github.com/dallasrowling/niche-hero/blob/main/assets/images/niche-hero.png?raw=true)
-
+</p>
 
 # Niche Hero
 
