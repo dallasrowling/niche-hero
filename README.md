@@ -1,3 +1,6 @@
+![alt text](https://github.com/dallasrowling/niche-hero/blob/main/assets/images/NICHE%20HERO.png?raw=true)
+
+
 # Niche Hero
 
 Niche Hero is aptly named for its capability to be plugged into any industry website and provide beautifully-designed blocks in seconds. 
