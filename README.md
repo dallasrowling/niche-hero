@@ -10,7 +10,7 @@ Niche Hero is currently only offered on **WordPress** but will be developed on o
 
 ## Usage
 
-Please click ![here](https://github.com/dallasrowling/niche-hero/wiki/How-to-use-%22Niche-Hero%22-in-WordPress) to view the usage documentation for Niche Hero
+Please click [here](https://github.com/dallasrowling/niche-hero/wiki/How-to-use-%22Niche-Hero%22-in-WordPress) to view the usage documentation for Niche Hero
 
 ## Intergrations
 
