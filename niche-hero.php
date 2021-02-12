@@ -14,6 +14,9 @@ function niche_hero_shortcode( $atts = array() ) {
 		'number_of_posts' => '6',
 		'post_type' => 'post',
 		'video_views_enabled' => 0,
+		'show_date_in_lead' => 0,
+		'show_date' => 1,
+		'order_by' => 'DESC',
 		'comments_enabled' => 0,
 		'overlay_color' => 'rgba(55,55,255,0.3)',
 		'second_overlay_color' => 'rgba(55,55,255,0.3)',
@@ -28,7 +31,7 @@ function niche_hero_shortcode( $atts = array() ) {
 	
 	$s .= '<section class="niche-hero nh-'.$display.'">';
 	$s .= '<ul class="niche-posts">';
-	$recent_posts = wp_get_recent_posts(array( 'numberposts' => $number_of_posts, 'post_type' => $post_type, 'offset' => $post_offset, 'post_status' => $post_status));
+	$recent_posts = wp_get_recent_posts(array( 'numberposts' => $number_of_posts, 'order' => $order_by, 'post_type' => $post_type, 'offset' => $post_offset, 'post_status' => $post_status));
 	foreach($recent_posts as $key => $post){
 	reset($recent_posts);
 		/* Size individual post based on column selection */
@@ -55,11 +58,17 @@ function niche_hero_shortcode( $atts = array() ) {
 		/* Comments */
 		if ($comments_enabled == 1) {
 			$nh_comments = '<span class="nh-comment-number"><i class="nh-comment-icon"></i>'.get_comments_number($post['ID']).'</span>';
-		}	
+		}
+		/* Combine post meta values */
+		$nh_meta = '<div class="nh-meta">'.$nh_post_views . $nh_comments.'</div>';		
 		/* Title */
 		$nh_title = '<div class="nh-title"><h4>'.$post['post_title'] .'</h4></div>';
 		/* Date */
-		$nh_date = '<div class="nh-date">'.get_the_date( 'F j, Y' ).'</div>';
+		if($show_date && ($display == 1 && $key != 0 && $key != 1) || $display == 3 || ($display == 2 && $key != 0 && $key != 1 && $key != 2)){
+			$nh_date = '<div class="nh-date">'.get_the_date( 'F j, Y', $post['ID']).'</div>';
+		} else if ($show_date_in_lead == 1){
+			$nh_date = '<div class="nh-date">'.get_the_date( 'F j, Y', $post['ID']).'</div>';			
+		}
 		/* Fetch post thumbnail or placeholder image */
 		if(has_post_thumbnail($post['ID'])){
 			$nh_post_thumbnail = get_the_post_thumbnail_url($post['ID'],'full'); 
@@ -77,16 +86,15 @@ function niche_hero_shortcode( $atts = array() ) {
 			}
 			/* Display post thumbnail or placeholder image */
 			if(has_post_thumbnail($post['ID'])){
-				$s .= '<a style="background: url('.$nh_post_thumbnail.'); background-position: center; background-size: cover;" href="'.get_permalink($post['ID']).'">'; 
+				$s .= '<a class="nh-post-thumbnail" style="background: url('.$nh_post_thumbnail.'); background-position: center; background-size: cover;" href="'.get_permalink($post['ID']).'">'; 
 			}else{ 
-				$s .= '<a href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail; 
+				$s .= '<a class="nh-default-thumbnail" href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail; 
 			}
-			$s .= '<span class="details">';
+			$s .= '</a>';			
+			$s .= '<a href="'.get_permalink($post['ID']).'" class="nh-details">';
 			$s .= $nh_date;
 			$s .= $nh_title;
-			$s .= $nh_post_views;
-			$s .= $nh_comments;
-			$s .= '</span>';
+			$s .= $nh_meta;
 			$s .= '</a>';
 			$s .= '</li>';		
 		/* Display section #2: Three hero boxes */
@@ -100,46 +108,41 @@ function niche_hero_shortcode( $atts = array() ) {
 			} else { 
 				$s .= '<li class="niche-post" style="width:'.$columns.'">'; 
 			} 
-			$s .= '<a href="'.get_permalink($post['ID']).'">';
-			$s .= $nh_post_thumbnail;		
-			$s .= '<span class="details">';
+			$s .= '<a class="nh-post-thumbnail" href="'.get_permalink($post['ID']).'">';
+			$s .= $nh_post_thumbnail;
+			$s .= '</a>';
+			$s .= '<a href="'.get_permalink($post['ID']).'" class="nh-details">';
 			$s .= $nh_date;
 			$s .= $nh_title;
-			$s .= $nh_post_views;
-			$s .= $nh_comments;
-			$s .= '</span>';
+			$s .= $nh_meta;
 			$s .= '</a>';
 			$s .= '</li>';	
 			/* Display section #3: Hero list */
 			} else if ($display == '3') {
 					$s .= '<li class="niche-post" style="min-height: '.$min_height.'; width:'.$columns.';">'; 
-					$s .= '<a href="'.get_permalink($post['ID']).'">';				
 						if($columns=='50%'){
 							if (has_post_thumbnail($post['ID'])){
-								$s .= '<a style="background: url('.$nh_post_thumbnail.'); background-position: center; background-size: cover;" href="'.get_permalink($post['ID']).'">';
+								$s .= '<a class="nh-post-thumbnail" style="padding-top: '.$image_height.'; height:'.$image_height.'; background: url('.$nh_post_thumbnail.'); background-position: center; background-size: cover;" href="'.get_permalink($post['ID']).'"></a>';
 							}else{
-								$s .= '<a href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail;
-							}
-							$s .= '<span class="details">';
+								$s .= '<a class="nh-default-thumbnail" href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail.'</a>';
+							}						
+							$s .= '<a class="nh-details">';
 							$s .= $nh_date;
 							$s .= $nh_title;
-							$s .= $nh_post_views;
-							$s .= $nh_comments;
-							$s .= '</span>';
+							$s .= $nh_meta;
+							$s .= '</a>';
 						}else{
 							if (has_post_thumbnail($post['ID'])){
-								$s .= '<a style="background: url('.$nh_post_thumbnail.'); background-position: center; background-size: cover;" href="'.get_permalink($post['ID']).'">'; 
+								$s .= '<a class="nh-post-thumbnail" style="padding-top: '.$image_height.'; height:'.$image_height.'; background: url('.$nh_post_thumbnail.'); background-position: center; background-size: cover;" href="'.get_permalink($post['ID']).'"></a>'; 
 							} else { 
-								$s .= '<a href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail; 
+								$s .= '<a class="nh-default-thumbnail" href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail.'</a>'; 
 							}
-							$s .= '<span class="details">';
+							$s .= '<a class="nh-details">';
 							$s .= $nh_date;
 							$s .= $nh_title;
-							$s .= $nh_post_views;
-							$s .= $nh_comments;
-							$s .= '</span>';
+							$s .= $nh_meta;
+							$s .= '</a>';
 						}
-					$s .= '</a>';
 					$s .= '</li>';						
 			}
 		}
@@ -156,26 +159,25 @@ function niche_hero_add_stylesheet() {
 	if (get_theme_mod('nh_enable_font_awesome') == 'enable') {
 		wp_enqueue_style( 'niche-hero-font-awesome-css', plugins_url( '/assets/css/all.min.css', __FILE__ ) );
 	}
-	if (get_theme_mod('nh_select_google_font') == 'roboto') {
+	if (get_theme_mod('nh_select_google_font') == 'Roboto') {
 		wp_enqueue_style( 'google-font-import-roboto', 'https://fonts.googleapis.com/css2?family=Roboto&display=swap' );	
-	} else if (get_theme_mod('nh_select_google_font') == 'open sans') {
+	} else if (get_theme_mod('nh_select_google_font') == 'Open Sans') {
 		wp_enqueue_style( 'google-font-import-open-sans', 'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap' );		
-	} else if (get_theme_mod('nh_select_google_font') == 'lato') {
+	} else if (get_theme_mod('nh_select_google_font') == 'Lato') {
 		wp_enqueue_style( 'google-font-import-lato', 'https://fonts.googleapis.com/css2?family=Lato&display=swap' );
 	}
 }
 
 function niche_hero_inline_css() {
-    wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/custom_script.css');
-        $google_font = get_theme_mod( 'nh_select_google_font' ); //E.g. #FF0000
-	    $custom_css = "section.niche-hero li.niche-post h4,
+	    $google_font = get_theme_mod( 'nh_select_google_font' );
+	    $custom_css = "<style type=\"text/css\">section.niche-hero li.niche-post h4,
 					   section.niche-hero li.niche-post span.details,
 					   section.niche-hero li.first-niche-post span.details,
 					   section.niche-hero li.second-niche-post span.details,
-					   section.niche-hero li.third-niche-post span.details { font-family: $google_font !important; }";
-        wp_add_inline_style( 'custom-style', $custom_css );
+					   section.niche-hero li.third-niche-post span.details { font-family: $google_font !important; }</style>";
+        echo $custom_css;
 }
-add_action( 'wp_enqueue_scripts', 'niche_hero_inline_css' );
+add_action( 'wp_head', 'niche_hero_inline_css' );
 
 /* Prioritize loading of stylesheet at load with 1 */
 add_action('wp_head', 'niche_hero_add_stylesheet', 1);
