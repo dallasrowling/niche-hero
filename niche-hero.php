@@ -12,9 +12,11 @@
 function niche_hero_shortcode( $atts = array() ) {
 	extract(shortcode_atts(array(
 		'number_of_posts' => '6',
+		'spacing' => '0px',
 		'post_type' => 'post',
 		'box_shadow_in_lead' => '',
 		'text_shadow_in_lead' => '',
+		'image_height_in_lead' => '300px',				
 		'meta_bg_in_lead' => '',
 		'border_radius_in_lead' => '',
 		'video_views_enabled' => 0,
@@ -36,7 +38,39 @@ function niche_hero_shortcode( $atts = array() ) {
 	), $atts));
 	$unique_id = wp_unique_id();
 	$unique_shortcode_id = 'nh-id-' . ($unique_id - 1);
-	$s .= '<section class="niche-hero nh-'.$display.'">';
+	$run_loop_once = 0;
+	/* Run custom css per Niche Hero section (only runs once) */	
+	while ($run_loop_once == 0 && $key == 0) {
+		$niche_hero_section_styling .= '<style type="text/css">';
+			if ($spacing != '0px') {
+			/* SPACING */
+			$niche_hero_section_styling .= '.'.$unique_shortcode_id.'-main { padding: ' . $spacing .' }';
+			}
+			if ($meta_bg_in_lead != ''){
+			/* META & DATE BG COLOR IN LEAD */ 
+			$niche_hero_section_styling .= '.first-niche-post.'.$unique_shortcode_id.' .nh-date, .first-niche-post.'.$unique_shortcode_id. ' .nh-meta { background: '.$meta_bg_in_lead.' !important;}';
+			$niche_hero_section_styling .= '.second-niche-post.'.$unique_shortcode_id.' .nh-date, .second-niche-post.'.$unique_shortcode_id. ' .nh-meta { background: '.$meta_bg_in_lead.' !important;}';
+			$niche_hero_section_styling .= '.third-niche-post.'.$unique_shortcode_id.' .nh-date, .third-niche-post.'.$unique_shortcode_id. ' .nh-meta { background: '.$meta_bg_in_lead.' !important;}';				
+			} 
+			if ($text_shadow_in_lead != ''){
+			/* TEXT SHADOW IN LEAD */ 
+			$niche_hero_section_styling .= '.first-niche-post.'.$unique_shortcode_id.' .nh-date, .first-niche-post.'.$unique_shortcode_id.' .nh-title h4, .first-niche-post.'.$unique_shortcode_id. ' .nh-meta { text-shadow: '.$text_shadow_in_lead.' !important;}';
+			$niche_hero_section_styling .= '.second-niche-post.'.$unique_shortcode_id.' .nh-date, .second-niche-post.'.$unique_shortcode_id.' .nh-title h4, .second-niche-post.'.$unique_shortcode_id. ' .nh-meta { text-shadow: '.$text_shadow_in_lead.' !important;}';				
+			$niche_hero_section_styling .= '.third-niche-post.'.$unique_shortcode_id.' .nh-date, .third-niche-post.'.$unique_shortcode_id.' .nh-title h4, .third-niche-post.'.$unique_shortcode_id. ' .nh-meta { text-shadow: '.$text_shadow_in_lead.' !important;}';								
+			}
+			if ($border_radius_in_lead != ''){
+			$niche_hero_section_styling .= '.first-niche-post.'.$unique_shortcode_id.' span.niche-overlay, .first-niche-post.'.$unique_shortcode_id.' a.nh-post-thumbnail, .first-niche-post.'.$unique_shortcode_id.' a.nh-default-thumbnail div.nh-bg-placeholder { border-radius: '.$border_radius_in_lead.' !important;}';
+			$niche_hero_section_styling .= '.second-niche-post.'.$unique_shortcode_id.' span.niche-overlay, .second-niche-post.'.$unique_shortcode_id.' a.nh-post-thumbnail, .second-niche-post.'.$unique_shortcode_id.' a.nh-default-thumbnail div.nh-bg-placeholder { border-radius: '.$border_radius_in_lead.' !important;}';
+			$niche_hero_section_styling .= '.third-niche-post.'.$unique_shortcode_id.' span.niche-overlay, .third-niche-post.'.$unique_shortcode_id.' a.nh-post-thumbnail, .third-niche-post.'.$unique_shortcode_id.' a.nh-default-thumbnail div.nh-bg-placeholder { border-radius: '.$border_radius_in_lead.' !important;}';
+			}
+			if ($border_radius != ''){
+			$niche_hero_section_styling .= 'li.niche-post.'.$unique_shortcode_id.' .nh-post-thumbnail, li.niche-post.'.$unique_shortcode_id.' .nh-default-thumbnail { border-radius: '.$border_radius.' !important;}';
+			}				
+		$niche_hero_section_styling .= '</style>';
+		$run_loop_once++;
+	}
+	echo $meta_lead_styling;	
+	$s .= '<section class="niche-hero '.$unique_shortcode_id.'-main nh-'.$display.'">';
 	$s .= '<ul class="niche-posts">';
 	$recent_posts = wp_get_recent_posts(array( 'numberposts' => $number_of_posts, 'order' => $order_by, 'post_type' => $post_type, 'offset' => $post_offset, 'post_status' => $post_status));
 	foreach($recent_posts as $key => $post){
@@ -67,32 +101,6 @@ function niche_hero_shortcode( $atts = array() ) {
 		if ($comments_enabled == 1) {
 			$nh_comments = '<span class="nh-comment-number"><i class="nh-comment-icon"></i>'.get_comments_number($post['ID']).'</span>';
 		}
-		/* Customize options for leading posts meta */
-		if ($key == 0){
-			$meta_lead_styling .= '<style type="text/css">';
-				if ($meta_bg_in_lead != ''){
-				/* META & DATE BG COLOR IN LEAD */ 
-				$meta_lead_styling .= '.first-niche-post.'.$unique_shortcode_id.' .nh-date, .first-niche-post.'.$unique_shortcode_id. ' .nh-meta { background: '.$meta_bg_in_lead.' !important;}';
-				$meta_lead_styling .= '.second-niche-post.'.$unique_shortcode_id.' .nh-date, .second-niche-post.'.$unique_shortcode_id. ' .nh-meta { background: '.$meta_bg_in_lead.' !important;}';
-				$meta_lead_styling .= '.third-niche-post.'.$unique_shortcode_id.' .nh-date, .third-niche-post.'.$unique_shortcode_id. ' .nh-meta { background: '.$meta_bg_in_lead.' !important;}';				
-				} 
-				if ($text_shadow_in_lead != ''){
-				/* TEXT SHADOW IN LEAD */ 
-				$meta_lead_styling .= '.first-niche-post.'.$unique_shortcode_id.' .nh-date, .first-niche-post.'.$unique_shortcode_id.' .nh-title h4, .first-niche-post.'.$unique_shortcode_id. ' .nh-meta { text-shadow: '.$text_shadow_in_lead.' !important;}';
-				$meta_lead_styling .= '.second-niche-post.'.$unique_shortcode_id.' .nh-date, .second-niche-post.'.$unique_shortcode_id.' .nh-title h4, .second-niche-post.'.$unique_shortcode_id. ' .nh-meta { text-shadow: '.$text_shadow_in_lead.' !important;}';				
-				$meta_lead_styling .= '.third-niche-post.'.$unique_shortcode_id.' .nh-date, .third-niche-post.'.$unique_shortcode_id.' .nh-title h4, .third-niche-post.'.$unique_shortcode_id. ' .nh-meta { text-shadow: '.$text_shadow_in_lead.' !important;}';								
-				}
-				if ($border_radius_in_lead != ''){
-				$meta_lead_styling .= '.first-niche-post.'.$unique_shortcode_id.' span.niche-overlay, .first-niche-post.'.$unique_shortcode_id.' a.nh-post-thumbnail, .first-niche-post.'.$unique_shortcode_id.' a.nh-default-thumbnail div.nh-bg-placeholder { border-radius: '.$border_radius_in_lead.' !important;}';
-				$meta_lead_styling .= '.second-niche-post.'.$unique_shortcode_id.' span.niche-overlay, .second-niche-post.'.$unique_shortcode_id.' a.nh-post-thumbnail, .second-niche-post.'.$unique_shortcode_id.' a.nh-default-thumbnail div.nh-bg-placeholder { border-radius: '.$border_radius_in_lead.' !important;}';
-				$meta_lead_styling .= '.third-niche-post.'.$unique_shortcode_id.' span.niche-overlay, .third-niche-post.'.$unique_shortcode_id.' a.nh-post-thumbnail, .third-niche-post.'.$unique_shortcode_id.' a.nh-default-thumbnail div.nh-bg-placeholder { border-radius: '.$border_radius_in_lead.' !important;}';
-				}
-				if ($border_radius != ''){
-				$meta_lead_styling .= 'li.niche-post.'.$unique_shortcode_id.' .nh-post-thumbnail, li.niche-post.'.$unique_shortcode_id.' .nh-default-thumbnail { border-radius: '.$border_radius.' !important;}';
-				}				
-			$meta_lead_styling .= '</style>';
-		}
-		echo $meta_lead_styling;
 		/* Combine post meta values */
 		$nh_meta = '<div class="nh-meta">'.$nh_post_views . $nh_comments.'</div>';		
 		/* Title */
@@ -105,13 +113,22 @@ function niche_hero_shortcode( $atts = array() ) {
 		}
 		/* Fetch post thumbnail or placeholder image */
 		if(has_post_thumbnail($post['ID'])){
-			$nh_post_thumbnail = get_the_post_thumbnail_url($post['ID'],'full'); 
-		} else { 
-			$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height.';background:url('.plugin_dir_url( __FILE__ ).'assets/images/260x150.png)"></div>'; 
+			$nh_post_thumbnail = get_the_post_thumbnail_url($post['ID'],'full');
+		} else if (($display == 1 && ($key === 0 || $key === 1)) || ($display == 2 && ($key === 0 || $key === 1 || $key === 2))) { 
+			$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height_in_lead.';background:url('.plugin_dir_url( __FILE__ ).'assets/images/260x150.png)"></div>'; 
+		} else {
+			$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height.';background:url('.plugin_dir_url( __FILE__ ).'assets/images/260x150.png)"></div>'; 			
+		}
+		/* Author */
+		if (is_plugin_active('wp-user-avatar/wp-user-avatar.php')) {
+			$nh_avatar = get_wp_user_avatar(get_the_author_meta('ID'), 44, 'left').'</div>';
+		} else {
+			$nh_avatar = '<img src="'.get_avatar_url($post['ID'], ['size' => '44']).'"/></div>';
 		}
 		/* Add all values together */
 		if (($show_author == 1) && ($display == 1 && $key != 0 && $key != 1) || $display == 3 || ($display == 2 && $key != 0 && $key != 1 && $key != 2)) {
-			$nh_detailed  = '<a href="'.get_permalink($post['ID']).'" class="nh-details"><div class="nh-avatar-box"><img src="'.get_avatar_url($post['ID'], ['size' => '300']).'"/></div><div class="nh-content">'. $nh_date . $nh_title . $nh_meta .'</div></a>';
+			$nh_detailed  = '<a href="'.get_permalink($post['ID']).'" class="nh-details">
+			<div class="nh-avatar-box">'.$nh_avatar.'<div class="nh-content">'. $nh_date . $nh_title . $nh_meta .'</div></a>';
 		} else {
 			$nh_detailed  = '<a href="'.get_permalink($post['ID']).'" class="nh-details">' . $nh_date . $nh_title . $nh_meta .'</a>';
 		}
