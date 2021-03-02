@@ -6,15 +6,14 @@ section.nh-2 li.first-niche-post div.nh-title h4,
 section.nh-2 li.second-niche-post div.nh-title h4,
 section.nh-2 li.third-niche-post div.nh-title h4 { letter-spacing: normal !important; padding-bottom: 25px !important; font-size: 24px !important; font-weight: 500 !important; }
 section.niche-hero li.niche-post { line-height: 1.476; }
-
 section.nh-3 li.niche-post a.nh-details span.nh-video-views { font-size: 16px; }
 section.nh-3 li.niche-post a.nh-details span.nh-comment-number { font-size: 16px; }
 section.nh-3 ul.niche-posts li.niche-post .nh-title h4 { font-size: 17px !important; text-align: left; padding-bottom: 15px; }
 section.nh-3 ul.niche-posts li.niche-post div.nh-date {	font-size: 15px !important; color: #888; padding-bottom: 10px; text-align: left; } 
 section.niche-hero ul.niche-posts li.first-niche-post img, section.niche-hero ul.niche-posts li.second-niche-post img, section.niche-hero ul.niche-posts li.third-niche-post img, section.niche-hero ul.niche-posts li.niche-post img { height: 100%; }
-div.nh-bg-placeholder { background: #EEE; width: 100%; height: 140px; }
+div.nh-bg-placeholder { width: 100%; height: 140px; }
+section.niche-hero ul.niche-posts li.niche-post a.nh-post-thumbnail, div.nh-bg-placeholder { background: #EEE; }
 section.niche-hero li.niche-post a.nh-details div.nh-title h4 { color: #000 !important; }
-
 section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box { padding: 0 14px 0 0px; width: 20%; float: left }
 section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-content { width: 80%; float: left; }
 section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box img { border-radius: 50%; }
@@ -37,7 +36,6 @@ section.niche-hero span.niche-overlay { position: absolute; top: 0; left: 0; wid
 section.niche-hero ul.niche-posts li.niche-post img { width: 100%; }
 section.niche-hero a.nh-details { margin-top: -100px; font-size: 35px; width: 100%; float: left; background: #FFF; position: relative; } 
 section.niche-hero ul.niche-posts li.niche-post a.nh-post-thumbnail, section.niche-hero ul.niche-posts li.niche-post a.nh-default-thumbnail { width: 100%; float: left; text-align: center; background: #FFF; border: 5px solid #FFF; position: relative; overflow: hidden; }
-
 section.nh-2 ul.niche-posts li.first-niche-post a.nh-post-thumbnail, section.nh-2 ul.niche-posts li.second-niche-post a.nh-post-thumbnail, section.nh-2 ul.niche-posts li.third-niche-post a.nh-post-thumbnail { width: 100%; float: left; text-align: center; background: #FFF; position: relative; overflow: hidden; box-shadow: 0px -70px 90px #444 inset; }
 section.niche-hero ul.niche-posts li.first-niche-post:hover, section.niche-hero ul.niche-posts li.second-niche-post:hover, section.niche-hero ul.niche-posts li.third-niche-post:hover  { opacity: 0.9; }
 section.niche-hero ul.niche-posts li.niche-post a.nh-post-thumbnail { padding-top: 140px; }
