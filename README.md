@@ -16,6 +16,7 @@ Please click [here](https://github.com/dallasrowling/niche-hero/wiki/How-to-use-
 
 - [Post Views Counter](https://en-ca.wordpress.org/plugins/post-views-counter/): Enable editable post views on any post type.
 - [Font Awesome](https://fontawesome.com/): Utilizing free icons on each post to enhance website aesthetics.
+- [WP User Avatar](https://en-ca.wordpress.org/plugins/wp-user-avatar/): Provide custom profile pictures for each author per post
 
 ## Contact
 
