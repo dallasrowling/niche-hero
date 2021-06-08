@@ -18,6 +18,6 @@ Please click [here](https://github.com/dallasrowling/niche-hero/wiki/How-to-use-
 - [Font Awesome](https://fontawesome.com/): Utilizing free icons on each post to enhance website aesthetics.
 - [WP User Avatar](https://en-ca.wordpress.org/plugins/wp-user-avatar/): Provide custom profile pictures for each author per post
 
-## Contact
+## Contact 
 
-If you're interested in knowing more about the project, feel free to reach out via email at: [djrowling94@gmail.com](mailto:djrowling94@gmail.com).
+If you're interested in knowing more about the project, feel free to reach out via my email at: [djrowling94@gmail.com](mailto:djrowling94@gmail.com).
