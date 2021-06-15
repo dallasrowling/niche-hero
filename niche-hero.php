@@ -3,7 +3,7 @@
  * Plugin Name: Niche Hero
  * Plugin URI: https://github.com/dallasrowling/niche-hero
  * Description: Niche Hero provides the blog hero section.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Dallas Rowling
  * Author URI: https://github.com/dallasrowling
  */
@@ -11,34 +11,39 @@
 /* NICHE HERO CONTENT */
 function niche_hero_shortcode( $atts = array() ) {
 	extract(shortcode_atts(array(
-		'number_of_posts' => '6',
-		'spacing' => '0px',
-		'post_type' => 'post',
-		'box_shadow_in_lead' => '',
-		'text_shadow_in_lead' => '',
-		'image_height_in_lead' => '300px',				
-		'meta_bg_in_lead' => '',
-		'border_radius_in_lead' => '',
-		'video_views_enabled' => 0,
-		'show_date_in_lead' => 0,
-		'border_radius' => '',
-		'show_date' => 1,
-		'show_author' => 0,
-		'order_by' => 'DESC',
-		'comments_enabled' => 0,
-		'overlay_color' => 'rgba(55,55,255,0.3)',
-		'second_overlay_color' => 'rgba(55,55,255,0.3)',
-		'third_overlay_color' => 'rgba(55,55,255,0.3)',
-		'display' => '1',
-		'image_height' => '140px',
-		'min_height' => '220px',
-		'columns' => '4',
-		'post_offset' => '0',
-		'post_status' => 'publish',
-	), $atts));
+		'type' => 'standard',
+	), $atts ));
+	if($type == 'standard'){
+		extract(shortcode_atts(array(
+			'number_of_posts' => '6',
+			'spacing' => '0px 35px',
+			'post_type' => 'post',
+			'box_shadow_in_lead' => '',
+			'text_shadow_in_lead' => '',
+			'image_height_in_lead' => '300px',				
+			'meta_bg_in_lead' => '',
+			'column_push' => '',
+			'border_radius_in_lead' => '',
+			'video_views_enabled' => 0,
+			'show_date_in_lead' => 0,
+			'border_radius' => '',
+			'show_date' => 1,
+			'show_author' => 0,
+			'order_by' => 'DESC',
+			'comments_enabled' => 0,
+			'overlay_color' => 'rgba(55,55,255,0.3)',
+			'second_overlay_color' => 'rgba(55,55,255,0.3)',
+			'third_overlay_color' => 'rgba(55,55,255,0.3)',
+			'display' => '1',
+			'image_height' => '140px',
+			'min_height' => '220px',
+			'post_offset' => '0',
+			'columns' => '4',
+			'post_status' => 'publish',
+		), $atts ));
 	$unique_id = wp_unique_id();
 	$unique_shortcode_id = 'nh-id-' . ($unique_id - 1);
-	$run_loop_once = 0;
+	$run_loop_once = 0;			
 	/* Run custom css per Niche Hero section (only runs once) */	
 	while ($run_loop_once == 0 && $key == 0) {
 		$niche_hero_section_styling .= '<style type="text/css">';
@@ -69,8 +74,21 @@ function niche_hero_shortcode( $atts = array() ) {
 		$niche_hero_section_styling .= '</style>';
 		$run_loop_once++;
 	}
-	echo $meta_lead_styling;	
-	$s .= '<section class="niche-hero '.$unique_shortcode_id.'-main nh-'.$display.'">';
+	echo $niche_hero_section_styling;
+	if ($column_push == 'one-quarter') {
+		$column_push = 'column-push-one-quarter';
+	} else if ($column_push == 'one-third') {
+		$column_push = 'column-push-one-third';			
+	} else if ( $column_push == 'one-half' ) { 
+		$column_push = 'column-push-half';
+	} else if ( $column_push == 'two-thirds' ) { 
+		$column_push = 'column-push-two-thirds';			
+	} else if ( $column_push == 'three-quarters' ) {
+		$column_push = 'column-push-three-quarters';
+	} else {
+		$column_push = '';
+	}
+	$s .= '<section class="niche-hero '.$column_push.' '.$unique_shortcode_id.'-main nh-'.$display.'">';
 	$s .= '<ul class="niche-posts">';
 	$recent_posts = wp_get_recent_posts(array( 'numberposts' => $number_of_posts, 'order' => $order_by, 'post_type' => $post_type, 'offset' => $post_offset, 'post_status' => $post_status));
 	foreach($recent_posts as $key => $post){
@@ -81,8 +99,10 @@ function niche_hero_shortcode( $atts = array() ) {
 			$columns = '25%;';
 		} else if ( $columns == '3' ) { 
 			$columns = '33.3%';
-		} else if ( $columns == '2' ) { 
+		} else if ( $columns == '2' ) {
 			$columns = '50%';
+		} else if ( $columns == '1' ) {
+			$columns = '100%';					
 		}
 		/* Video views */
 		if ($video_views_enabled==1 && is_plugin_active('post-views-counter/post-views-counter.php')){
@@ -104,7 +124,7 @@ function niche_hero_shortcode( $atts = array() ) {
 		/* Combine post meta values */
 		$nh_meta = '<div class="nh-meta">'.$nh_post_views . $nh_comments.'</div>';		
 		/* Title */
-		$nh_title = '<div class="nh-title"><h4>'.$post['post_title'] .'</h4></div>';
+		$nh_title = '<div class="nh-title"><h4>'.$post['post_title'].'</h4></div>';
 		/* Date */
 		if($show_date && ($display == 1 && $key != 0 && $key != 1) || $display == 3 || ($display == 2 && $key != 0 && $key != 1 && $key != 2)){
 			$nh_date = '<div class="nh-date">'.get_the_date( 'F j, Y', $post['ID']).'</div>';
@@ -196,11 +216,161 @@ function niche_hero_shortcode( $atts = array() ) {
 							$s .= $nh_detailed;
 						}
 					$s .= '</li>';						
+			} else if ($display == '4'){
+			// LAZY CSS GENERATION FOR DISPLAY #4
+			echo '
+				<style type="text/css">
+				section.nh-4 li span.video-views {
+					z-index: 1;
+					color: #FFF !important;
+					position: absolute;
+					top: 0;
+					padding: 10px 0 0 20px;
+					left: 0;
+					font-weight: 500;
+					text-shadow: 1px 1px #000;
+				}
+
+				section.nh-4 li h4 {
+					z-index: 1;
+					width: 100%;
+					text-align: center;
+					position: absolute;
+					bottom: 0;
+					padding: 0 25px 20px;
+					left: 0;
+					font-size: 20px !important;
+					color: #FFF;
+					text-shadow: 1px 1px #000;
+				}
+
+				section.nh-4 li span.video-views:before {
+					font-family: "Font Awesome 5 Free";
+					content: "\f080";
+					padding-right: 5px;
+				}
+
+				section.nh-4 li span.comment-number {
+					position: absolute;
+					top: 0;
+					right: 0;
+					color: #FFF !important;
+					z-index: 1;
+					padding: 10px 20px 0 0;
+					font-weight: 500;
+					text-shadow: 1px 1px #000;
+				}	
+
+				section.nh-4 li:hover img {
+					transform: scale(1.2);
+				}
+
+				section.nh-4 { 
+					border: 5px solid #fff;
+				} 	
+
+				section.nh-4 li .nh-comment-number:before {
+					font-family: "Font Awesome 5 Free";
+					content: "\f075";
+					padding-right: 5px;
+					font-weight: 700 !important;
+				}
+							
+				section.nh-4 li a.thumbnail-overlay { 
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 200px;
+					overflow: hidden;
+					background: rgba(0,0,0,0.5);
+					box-shadow: 2px 2px 100px #222 inset; z-index: 1;
+				} 
+				
+				section.nh-4 li img { 
+					transform-origin: 50% 65%;
+					transition: transform 1s, filter 3s ease-in-out; 
+				} 
+				
+				section.nh-4 { 
+					margin: 0; 
+				} 
+				
+				section.nh-4 li { 
+					margin: 0; 
+					position: relative; 
+					list-style: none;
+					overflow: hidden;
+					height: 200px; 
+				}
+				</style>';
+				$s .= '<li>';
+				  $s .= '<a class="thumbnail-overlay" href="'. /*the_permalink()*/ "" .'"></a>';
+					$s .= '<img src="'.$nh_post_thumbnail.'"/>'; 
+					$s .= '<span class="video-views">'.$nh_post_views.'</span>';
+					$s .= '<span class="comment-number">'.$nh_comments.'</span>';
+					$s .= '<h4>'.$post['post_title'].'</h4>';
+					if ( $show_date == true ){
+					//	$s .= '<span>'.the_date().'</span>';
+					}
+					$s .= '<span class="neatly--read-more">Read more</span>';
+				$s .= '</li>';
 			}
 		}
 		$s .= '</ul>';
 		$s .= '</section>';
-		return $s; 
+		return $s;
+	} else if ($type == 'bar') {
+		extract(shortcode_atts(array(
+			'spacing' => '0 35px',
+			'heading' => '',
+			'number_of_posts' => '3',
+			'show_title' => 'true',
+			'show_date' => 'false',
+			'show_read_more' => 'false',
+			'thumb_size' => 'thumbnail',
+		), $atts ));	
+		ob_start();
+		$neatly_loop = new WP_Query( array(
+		'posts_per_page' => $number_of_posts
+		));
+		echo '<style type="text/css">.niche-hero .gs-recent-posts-thumbnails li { margin: 0; } .nh-type-bar { border: 5px solid #FFF; }</style>';
+		echo '<section class="niche-hero nh-type-bar column-push-one-third" style="padding: '.$spacing.'">';
+		if ($heading != '') { echo '<div class="neatly-recent neatly-recent-shortcode "><h3>'.$heading.'</h3>'; }
+		if ( $neatly_loop->have_posts() ) : ?>
+		<ul class="gs-recent-posts-thumbnails">
+		<?php while ( $neatly_loop->have_posts() ) : $neatly_loop->the_post(); ?>
+		<?php
+		if (pvc_get_post_views( get_the_ID()) <= 999) {
+			$nh_post_views = pvc_get_post_views( get_the_ID()); 
+		} else if( pvc_get_post_views( get_the_ID()) >= 1000 && pvc_get_post_views( get_the_ID()) <= 999999 ) {
+			$nh_post_views = floor(pvc_get_post_views( get_the_ID())/1000) . 'K'; 
+		} else if( pvc_get_post_views( get_the_ID()) >= 1000000 && pvc_get_post_views( get_the_ID()) <= 1099999 ) {
+			$nh_post_views = floor(pvc_get_post_views( get_the_ID())/1000000) . 'M'; 		
+		} else if( pvc_get_post_views( get_the_ID()) >= 1100000 ) {
+			$nh_post_views = number_format(pvc_get_post_views( get_the_ID())/1000000, 1) . 'M'; 				
+		}	
+		?>	
+		<li>
+		  <a class="thumbnail-overlay" href="<?php the_permalink(); ?>"></a>
+			<?php if ( has_post_thumbnail() ) : the_post_thumbnail($thumbsize); endif; ?>
+			<?php echo '<span class="video-views">'.$nh_post_views .'</span>'; ?>
+			<?php echo '<span class="comment-number">'.get_comments_number(get_the_ID()).'</span>'; ?>
+			<?php if ( $show_title == true ) : ?><h4><?php echo get_the_title(); ?></h4><?php endif; ?>
+			<?php if ( $show_date == true ) : ?><span><?php the_date(); ?></span><?php endif; ?>
+			<?php if ( $show_read_more == true ) : ?><span class="neatly--read-more">Read more</span><?php endif; ?>
+		</li>
+		<?php endwhile; ?>
+		</ul>
+		<?php else : ?>
+		No posts found.
+		<?php endif; 
+		echo '</div></section>';
+		wp_reset_postdata();
+		$content = ob_get_contents();
+		ob_end_clean();
+		return $content;
+	}
 }
 /* NICHE HERO SHORTCODE REGISTRATION */
 add_shortcode('nichehero','niche_hero_shortcode');
@@ -301,3 +471,131 @@ function niche_hero_plugin_customizer( $wp_customize ) {
 		);
 }
 add_action( 'customize_register', 'niche_hero_plugin_customizer' );
+
+
+
+class neatly_recent_posts_thumbnail extends WP_Widget {
+    function __construct() {
+        parent::__construct(
+          'neatly-recent-posts', // Base ID
+          'Recent Posts with Thumbnails', // Name
+          array( 'description' => __('Display recent posts with thumbnails'), ) // Args
+        );
+	}
+    public function widget($args, $instance) {
+            extract($args);
+     
+	$title = apply_filters( 'widget_title', $instance['title'] );
+	$number = $instance['number'];
+	$thumbsize = $instance['thumbsize'];
+	$show_title = isset($instance['show_title']) ? $instance['show_title'] : true;
+	$show_date = isset($instance['show_date']) ? $instance['show_date'] : true;
+	$show_read_more = isset($instance['show_read_more']) ? $instance['show_read_more'] : true;  
+	echo $before_widget.$before_title;
+	if (!empty($title)){
+		echo $title;
+	}
+	echo $after_title;
+	$args = array (
+	  'posts_per_page' => $number,
+	);
+	$neatly_posts = new WP_Query($args);
+	if( $neatly_posts->have_posts() ) {
+	  echo '<ul class="gs-recent-posts-thumbnails">';
+	  while( $neatly_posts->have_posts() ) : $neatly_posts->the_post();
+
+	if (pvc_get_post_views( $instance['ID']) <= 999) {
+		$nh_post_views = pvc_get_post_views( $instance['ID']); 
+	} else if( pvc_get_post_views( $instance['ID']) >= 1000 && pvc_get_post_views( $instance['ID']) <= 999999 ) {
+		$nh_post_views = floor(pvc_get_post_views( $instance['ID'])/1000) . 'K'; 
+	} else if( pvc_get_post_views( $instance['ID']) >= 1000000 && pvc_get_post_views( $instance['ID']) <= 1099999 ) {
+		$nh_post_views = floor(pvc_get_post_views( $instance['ID'])/1000000) . 'M'; 		
+	} else if( pvc_get_post_views( $instance['ID']) >= 1100000 ) {
+		$nh_post_views = number_format(pvc_get_post_views( $instance['ID'])/1000000, 1) . 'M'; 				
+	}
+?>		  
+            <li>
+              <a class="thumbnail-overlay" href="<?php the_permalink(); ?>"></a>
+                <?php if ( has_post_thumbnail() ) : the_post_thumbnail($thumbsize); endif; ?>
+				<?php echo '<span class="video-views">'.$nh_post_views .'</span>'; ?>
+				<?php echo '<span class="comment-number">'.get_comments_number($instance['ID']).'</span>'; ?>
+                <?php if ( $show_title == true ) : ?><h4><?php the_title(); ?></h4><?php endif; ?>
+                <?php if ( $show_date == true ) : ?><span><?php the_date(); ?></span><?php endif; ?>
+                <?php if ( $show_read_more == true ) : ?><span class="neatly--read-more">Read more</span><?php endif; ?>
+            </li>
+          <?php endwhile;
+        }
+        
+        // Restore original Post Data
+        wp_reset_postdata();
+            
+            echo $after_widget; // ends the widget
+        }
+            
+  
+  /* The widget configuration form
+  =============================================*/
+  
+    public function form( $instance ) {
+        $title = strip_tags($instance['title']);
+        if (isset( $instance[ 'number' ] ) ) {
+          $number = $instance['number'];
+        } else { $number = '5'; }
+        if (isset( $instance[ 'thumbsize' ] ) ) {
+          $thumbsize = $instance['thumbsize'];
+        } else { $thumbsize = 'thumbnail'; }
+        if (isset( $instance[ 'show_title' ] ) ) {
+          $show_title = true;
+        } else { $show_title = false; }
+        if (isset( $instance[ 'show_date' ] ) ) {
+          $show_date = true;
+        } else { $show_date = false; }
+        if (isset( $instance[ 'show_read_more' ] ) ) {
+          $show_read_more = true;
+        } else { $show_read_more = false; }
+
+    ?>
+    <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
+    <p><em>Use the following options to customize the display.</em></p>
+    
+    <p style="border-bottom:4px double #eee;padding: 0 0 10px;">
+      <label for="<?php echo $this->get_field_id( 'number' ); ?>">Number of Posts Displayed</label>
+      <input id="<?php echo $this->get_field_id( 'number'); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo esc_attr($number); ?>" type="number" style="width:100%;" /><br>
+      <label for="<?php echo $this->get_field_id( 'thumbsize' ); ?>">Thumbnail Size</label>
+      <input id="<?php echo $this->get_field_id( 'thumbsize'); ?>" name="<?php echo $this->get_field_name( 'thumbsize' ); ?>" value="<?php echo esc_attr($thumbsize); ?>"  style="width:100%;" /><br><br>
+      <label for="<?php echo $this->get_field_id( 'show_title' ); ?>">Show the post titles?
+      <input id="<?php echo $this->get_field_id( 'show_title'); ?>" name="<?php echo $this->get_field_name( 'show_title' ); ?>" <?php checked($instance['show_title'], true) ?>  type="checkbox" /></label><br><br>
+      <label for="<?php echo $this->get_field_id( 'show_date' ); ?>">Show the post dates?
+      <input id="<?php echo $this->get_field_id( 'show_date'); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" <?php checked($instance['show_date'], true) ?>  type="checkbox" /></label><br><br>
+      <label for="<?php echo $this->get_field_id( 'show_read_more' ); ?>">Show "read more" text for each post?
+      <input id="<?php echo $this->get_field_id( 'show_read_more'); ?>" name="<?php echo $this->get_field_name( 'show_read_more' ); ?>" <?php checked($instance['show_read_more'], true) ?>  type="checkbox" /></label>
+    </p>
+      
+    <?php }
+    
+    /* Saving updated information
+    =============================================*/
+    
+    public function update( $new_instance, $old_instance ) {
+        $instance = $old_instance;
+        
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['number'] = strip_tags($new_instance['number']);
+        $instance['thumbsize'] = strip_tags($new_instance['thumbsize']);
+        $instance['show_title'] = $new_instance['show_title'] ? 1 : 0;
+        $instance['show_date'] = $new_instance['show_date'] ? 1 : 0; 
+        $instance['show_read_more'] = $new_instance['show_read_more'] ? 1 : 0; 
+          
+        return $instance;
+    }
+        
+}
+
+function register_neatly_recent_posts_thumbnail() {
+    register_widget( 'neatly_recent_posts_thumbnail' );
+}
+add_action( 'widgets_init', 'register_neatly_recent_posts_thumbnail' );
+
+
+
