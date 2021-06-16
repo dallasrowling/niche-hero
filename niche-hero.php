@@ -3,12 +3,12 @@
  * Plugin Name: Niche Hero
  * Plugin URI: https://github.com/dallasrowling/niche-hero
  * Description: Niche Hero provides the blog hero section.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Dallas Rowling
  * Author URI: https://github.com/dallasrowling
  */
  
-/* NICHE HERO CONTENT */
+/* NICHE HERO CONTENT SHORTCODE */
 function niche_hero_shortcode( $atts = array() ) {
 	extract(shortcode_atts(array(
 		'type' => 'standard',
@@ -17,7 +17,7 @@ function niche_hero_shortcode( $atts = array() ) {
 	if($type == 'standard'){
 		extract(shortcode_atts(array(
 			'number_of_posts' => '6',
-			'spacing' => '0px 35px',
+			'spacing' => '0px',
 			'post_type' => 'post',
 			'box_shadow_in_lead' => '',
 			'text_shadow_in_lead' => '',
@@ -50,7 +50,7 @@ function niche_hero_shortcode( $atts = array() ) {
 		$niche_hero_section_styling .= '<style type="text/css">';
 			/* SPACING */
 			if ($spacing != '0px') {
-				$niche_hero_section_styling .= '.'.$unique_shortcode_id.'-main { padding: ' . $spacing .' }';
+				$niche_hero_section_styling .= '.'.$unique_shortcode_id.'-main { padding: ' . /*$spacing*/ "" .' }';
 			}
 			/* META & DATE BG COLOR IN LEAD */ 
 			if ($meta_bg_in_lead != ''){
@@ -143,10 +143,11 @@ function niche_hero_shortcode( $atts = array() ) {
 				$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height.';background:url('.plugin_dir_url( __FILE__ ).'assets/images/260x150.png)"></div>'; 			
 			}
 			/* AUTHOR */
+			$author_id = get_post_field( 'post_author', $post['ID']);
 			if (is_plugin_active('wp-user-avatar/wp-user-avatar.php')) {
-				$nh_avatar = get_wp_user_avatar(get_the_author_meta('ID'), 44, 'left').'</div>';
+				$nh_avatar = get_wp_user_avatar(get_the_author_meta('ID'), 44, 'left').'<span class="author-tooltip">'.get_the_author_meta( 'display_name', $author_id ).'</span></div>';
 			} else {
-				$nh_avatar = '<img src="'.get_avatar_url($post['ID'], ['size' => '44']).'"/></div>';
+				$nh_avatar = '<img src="'.get_avatar_url($post['ID'], ['size' => '44']).'"/><span class="author-tooltip">'.get_the_author_meta( 'display_name', $author_id ).'</span></div>';
 			}
 			/* ADD ALL AUTHORS TOGETHER */
 			if (($show_author == 1) && ($display == 1 && $key != 0 && $key != 1) || $display == 3 || ($display == 2 && $key != 0 && $key != 1 && $key != 2)) {
@@ -230,7 +231,7 @@ function niche_hero_shortcode( $atts = array() ) {
 	// START TYPE: BAR
 	} else if ($type == 'bar') {
 		extract(shortcode_atts(array(
-			'spacing' => '0 35px',
+			'spacing' => '0',
 			'heading' => '',
 			'number_of_posts' => '3',
 			'show_title' => 'true',
@@ -242,7 +243,7 @@ function niche_hero_shortcode( $atts = array() ) {
 		$recent_posts = new WP_Query( array(
 		'posts_per_page' => $number_of_posts
 		));
-		$s .= '<section class="niche-hero nh-type-bar column-push-one-third" style="padding: '.$spacing.'">';
+		$s .= '<section class="niche-hero nh-type-bar column-push-one-third" style="padding: './*$spacing*/ " ".' !important">';
 			if ($heading != '') {
 				$s .= '<div class="niche_hero-recent niche_hero-recent-shortcode "><h3>'.$heading.'</h3>'; 
 			}
@@ -290,14 +291,28 @@ function niche_hero_shortcode( $atts = array() ) {
 	// END TYPE: BAR
 }
 
+/* NICHE HERO ROW */
+function niche_hero_row( $atts = array(), $content = null ) {
+		extract(shortcode_atts(array(
+			'spacing' => '0 35px'
+		), $atts ));
+    $content = do_shortcode( $content );
+ 
+    // always return
+    return '<div class="nh-row" style="padding: '.$spacing.'">'.$content.'</div>';
+}
+
 /* NICHE HERO SHORTCODE REGISTRATION */
 add_shortcode('nichehero','niche_hero_shortcode');
+add_shortcode( 'nh_row', 'niche_hero_row' );
 
 /* Registrate Niche Hero Stylesheet */
 function niche_hero_add_stylesheet() {
     wp_enqueue_style( 'niche-hero-css', plugins_url( '/assets/css/style.css', __FILE__ ) );
 	if (get_theme_mod('nh_enable_font_awesome') == 'enable') {
 		wp_enqueue_style( 'niche-hero-font-awesome-css', plugins_url( '/assets/css/all.min.css', __FILE__ ) );
+		wp_enqueue_style( 'niche-hero-bootstrap-grid-min-css', plugins_url( '/assets/css/bootstrap-grid.min.css', __FILE__ ) );
+		wp_enqueue_style( 'niche-hero-bootstrap-grid-rtl-min-css', plugins_url( '/assets/css/bootstrap-grid.rtl.min.css', __FILE__ ) );
 	}
 	// REGISTER GOOGLE FONTS
 	if (get_theme_mod('nh_select_google_font') == 'Roboto') {
