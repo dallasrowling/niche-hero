@@ -3,7 +3,7 @@
  * Plugin Name: Niche Hero
  * Plugin URI: https://github.com/dallasrowling/niche-hero
  * Description: Niche Hero provides the blog hero section.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Dallas Rowling
  * Author URI: https://github.com/dallasrowling
  */
@@ -169,10 +169,12 @@ function niche_hero_shortcode( $atts = array() ) {
 					if (($key === key($recent_posts) || $key === 1) && $box_shadow_in_lead != '' ){
 						$s .= '<a class="nh-post-thumbnail" style="box-shadow: '.$box_shadow_in_lead.' !important;background: url('.$nh_post_thumbnail.');" href="'.get_permalink($post['ID']).'">'; 				
 					} else {
-						$s .= '<a class="nh-post-thumbnail" style="background: url('.$nh_post_thumbnail.');" href="'.get_permalink($post['ID']).'">'; 
+						$s .= '<div class="pd-5"><a class="nh-post-thumbnail" style="background: url('.$nh_post_thumbnail.');" href="'.get_permalink($post['ID']).'">'; 
+						$s .= '</div>';
 					}
 				}else{ 
-					$s .= '<a class="nh-default-thumbnail" href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail; 
+					$s .= '<div class="pd-5"><a class="nh-default-thumbnail" href="'.get_permalink($post['ID']).'">' . $nh_post_thumbnail; 
+					$s .= '</div>';
 				}
 				$s .= '</a>';			
 				$s .= $nh_detailed;
@@ -202,7 +204,7 @@ function niche_hero_shortcode( $atts = array() ) {
 				$s .= '</li>';	
 			/* DISPLAY SECTION #3: HERO LIST */
 			} else if ($display == '3') {
-					$s .= '<li class="niche-post" style="min-height: '.$min_height.'; width:'.$columns.';">'; 
+					$s .= '<li class="niche-post" style="min-height: '.$min_height.'; width:'.$columns.';"><div class="pd-5">'; 
 						if($columns=='50%'){
 							if (has_post_thumbnail($post['ID'])){
 								$s .= '<a class="nh-post-thumbnail" style="padding-top: '.$image_height.'; height:'.$image_height.'; background: url('.$nh_post_thumbnail.');" href="'.get_permalink($post['ID']).'"></a>';
@@ -218,7 +220,7 @@ function niche_hero_shortcode( $atts = array() ) {
 							}
 							$s .= $nh_detailed;
 						}
-					$s .= '</li>';						
+					$s .= '</div></li>';						
 			}
 			}
 		$s .= '</ul>';
