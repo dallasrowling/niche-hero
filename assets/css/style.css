@@ -1,6 +1,13 @@
 .pd-5 { padding: 5px; }
+.nh-row { float: left; width: 100%; }
+section.nh-type-bar { border: 5px solid transparent; }
 section.nh-1 ul.niche-posts li.niche-post div.nh-date { font-size: 14px !important; color: #888; padding-bottom: 7px; text-align: left;  }
 section.nh-1 li.niche-post h4 { padding-bottom: 12px; }
+section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box { position: relative; }
+section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box span { display: none; } 
+section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box:hover span {display: inline;position: absolute;top: 80%;left: 50%;margin-left: -62px; /* Add half of 14px to ensure its centered */ background: #444;color: #FFF;padding: 10px;width: 110px;border-radius: 10px;text-align: center;}
+section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box:hover span::after {content: " "; position: absolute; bottom: 100%;  /* At the top of the tooltip */ left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: transparent transparent #444 transparent; }
+section.nh-3 ul.niche-posts li.niche-post .nh-details .nh-avatar-box:hover span { top: 85% !important; }
 section.nh-1 li.first-niche-post div.nh-title h4,
 section.nh-1 li.second-niche-post div.nh-title h4,
 section.nh-2 li.first-niche-post div.nh-title h4, 
@@ -13,13 +20,13 @@ section.nh-3 ul.niche-posts li.niche-post .nh-title h4 { font-size: 17px !import
 section.nh-3 ul.niche-posts li.niche-post div.nh-date {	font-size: 15px !important; color: #888; padding-bottom: 10px; text-align: left; } 
 section.niche-hero ul.niche-posts li.first-niche-post img, section.niche-hero ul.niche-posts li.second-niche-post img, section.niche-hero ul.niche-posts li.third-niche-post img, section.niche-hero ul.niche-posts li.niche-post img { height: 100%; }
 div.nh-bg-placeholder { width: 100%; height: 140px; }
-section.niche-hero ul.niche-posts li.niche-post a.nh-post-thumbnail, div.nh-bg-placeholder { background: #EEE; }
+section.niche-hero ul.niche-posts li.niche-post a.nh-post-thumbnail, div.nh-bg-placeholder { background-color: #EEE !important; }
 section.niche-hero li.niche-post a.nh-details div.nh-title h4 { color: #000 !important; }
 section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box { padding: 0 14px 0 0px; width: 20%; float: left }
 section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-content { width: 80%; float: left; }
 section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box img { border-radius: 50%; }
 li.first-niche-post div.nh-bg-placeholder, li.second-niche-post div.nh-bg-placeholder, li.third-niche-post div.nh-bg-placeholder { max-height: 100%; }
-section.niche-hero ul.niche-posts li.first-niche-post .nh-title, section.niche-hero ul.niche-posts li.second-niche-post .nh-title, section.niche-hero ul.niche-posts li.third-niche-post .nh-title { overflow: hidden; position: absolute; left: 0; bottom: 0; text-align:justify; padding: 0 20px; }
+section.niche-hero ul.niche-posts li.first-niche-post .nh-title, section.niche-hero ul.niche-posts li.second-niche-post .nh-title, section.niche-hero ul.niche-posts li.third-niche-post .nh-title { overflow: hidden; position: absolute; left: 0; bottom: 0; text-align: center; width: 100%; padding: 0 20px; }
 section.niche-hero ul.niche-posts li.first-niche-post a.nh-details .nh-meta, section.niche-hero ul.niche-posts li.second-niche-post a.nh-details .nh-meta, section.niche-hero ul.niche-posts li.third-niche-post a.nh-details .nh-meta { position: absolute;top: 0;right: 0;z-index: 1;color: #FFF;padding: 5px 20px;font-size: 15px;text-shadow: unset;font-weight: 500;}
 section.niche-hero ul.niche-posts li.niche-post .nh-title h4 { line-height: 1.25; overflow: hidden;text-overflow: ellipsis;display: -webkit-box;max-height: 36px;-webkit-line-clamp: 2;-webkit-box-orient: vertical;padding: 0;height: 32px;min-height: 36px;}
 section.nh-3 ul.niche-posts li.niche-post .nh-title h4 {max-height: 44px;height: 44px;min-height: 44px;}
@@ -68,7 +75,7 @@ section.nh-type-bar li a.thumbnail-overlay {  position: absolute; top: 0; left: 
 section.nh-type-bar li img {  transform-origin: 50% 65%; transition: transform 1s, filter 3s ease-in-out; } 
 section.nh-type-bar span.nh-video-views { color: #FFF !important; }
 section.nh-type-bar ul { margin: 0 !important; } 
-section.nh-type-bar { margin: 0; padding: 5px 40px 5px 5px !important; } 
+section.nh-type-bar { margin: 0; } 
 section.nh-type-bar li { margin: 0; position: relative; list-style: none; overflow: hidden; height: 200px; background: #BBB; color: #BBB; }
 /* WIDGET: RECENT POSTS WITH FEATURED IMAGE */
 .niche-hero-widget-recent-posts-with-fi { margin: 0; position: relative; }
@@ -89,15 +96,21 @@ section.nh-type-bar li { margin: 0; position: relative; list-style: none; overfl
 /* ############### */
 /* SMALLER SCREENS */
 /* ############### */
-@media (max-width: 700px) {
+@media (max-width: 900px) {
+	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box:hover span { margin-left: -55px !important; top: 100% !important; }
+	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box { padding: 0 !important; }
+	section.nh-3 { width: 100% !important; }
+	section.nh-2 { border: 5px solid transparent; }
+	section.nh-type-bar { width: 100% !important; padding: 0 25px !important; }
 	#site-header, #site-content, #site-footer, .header-footer-group { margin: 0 !important;  }
 	section.nh-1 ul.niche-posts li.first-niche-post, section.niche-hero ul.niche-posts li.second-niche-post, section.niche-hero ul.niche-posts li.third-niche-post { border: 0 !important; }	
-
+	span.nh-video-views, .nh-comment-number { float: left !important; width: 100% !important; }
 	div.nh-avatar-box img { margin: 0 auto; }
 	div.nh-avatar-box { width: 100%; margin: 0 auto; padding: 0 15px 11px; display: inline-flex; margin-top: -45px; }
 	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-content { width: 100%; }
-	section.nh-1 li.first-niche-post div.nh-title h4, section.nh-1 li.second-niche-post div.nh-title h4, section.nh-2 li.first-niche-post div.nh-title h4, section.nh-2 li.second-niche-post div.nh-title h4, section.nh-2 li.third-niche-post div.nh-title h4 { font-size: 13px !important; }
-
+	section.nh-1 li.first-niche-post div.nh-title h4, section.nh-1 li.second-niche-post div.nh-title h4, section.nh-2 li.first-niche-post div.nh-title h4, section.nh-2 li.second-niche-post div.nh-title h4, section.nh-2 li.third-niche-post div.nh-title h4 { font-size: 18px !important; }
+	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box img { width: 25% !important; border: 2px solid #FFF; box-shadow: 1px 1px 1px #ddd; margin-bottom: 10px; }
+	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box { width: 100%; }
 	section.nh-2 li.first-niche-post span.nh-video-views, section.nh-2 li.second-niche-post span.nh-video-views, section.nh-2 li.third-niche-post span.nh-video-views { float: right; width: 50%; }
 	section.nh-1 li.first-niche-post .nh-comment-number, section.nh-1 li.second-niche-post .nh-comment-number, section.nh-2 li.first-niche-post .nh-comment-number, section.nh-2 li.second-niche-post .nh-comment-number, section.nh-2 li.third-niche-post .nh-comment-number { font-size: 12px;  }		
 	section.nh-2 li.first-niche-post .nh-comment-number, section.nh-2 li.second-niche-post .nh-comment-number, section.nh-2 li.third-niche-post .nh-comment-number { padding-left: 0 !important; vertical-align: 9px; }	
@@ -130,4 +143,15 @@ section.nh-type-bar li { margin: 0; position: relative; list-style: none; overfl
 	section.niche-hero ul.niche-posts li.niche-post {min-height: 270px !important;}
 	section.niche-hero ul.niche-posts li.niche-post .nh-bg-placeholder,
 	section.niche-hero ul.niche-posts li.niche-post .nh-post-thumbnail { height: 110px !important; }
+}
+
+@media (max-width: 700px) {
+	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box {
+		float: left;
+		padding: 0;
+	}
+}
+
+@media (max-width: 480px) {
+	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box img { width: 35% !important; border-width: 3px; }
 }
