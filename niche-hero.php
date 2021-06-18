@@ -3,7 +3,7 @@
  * Plugin Name: Niche Hero
  * Plugin URI: https://github.com/dallasrowling/niche-hero
  * Description: Niche Hero provides the blog hero section.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Dallas Rowling
  * Author URI: https://github.com/dallasrowling
  */
@@ -311,8 +311,6 @@ function niche_hero_add_stylesheet() {
     wp_enqueue_style( 'niche-hero-css', plugins_url( '/assets/css/style.css', __FILE__ ) );
 	if (get_theme_mod('nh_enable_font_awesome') == 'enable') {
 		wp_enqueue_style( 'niche-hero-font-awesome-css', plugins_url( '/assets/css/all.min.css', __FILE__ ) );
-		wp_enqueue_style( 'niche-hero-bootstrap-grid-min-css', plugins_url( '/assets/css/bootstrap-grid.min.css', __FILE__ ) );
-		wp_enqueue_style( 'niche-hero-bootstrap-grid-rtl-min-css', plugins_url( '/assets/css/bootstrap-grid.rtl.min.css', __FILE__ ) );
 	}
 	// REGISTER GOOGLE FONTS
 	if (get_theme_mod('nh_select_google_font') == 'Roboto') {
