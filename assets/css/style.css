@@ -82,9 +82,9 @@ section.nh-type-bar li { margin: 0; position: relative; list-style: none; overfl
 .niche-hero-widget-recent-posts-with-fi li { position: relative; list-style: none; overflow: hidden; }
 .niche-hero-widget-recent-posts-with-fi li .nh-meta-data { text-align: center; position: relative; z-index: 2; background: #FFF; padding: 30px 20px; }
 .niche-hero-widget-recent-posts-with-fi li .nh-meta-data h4 { padding-bottom: 10px; }
-.niche-hero-widget-recent-posts-with-fi li span.nh-date { float: left; width: 100%; margin-bottom: 20px; }
+.niche-hero-widget-recent-posts-with-fi li span.nh-date { float: left; width: 100%; margin-bottom: 12px; }
 .niche-hero-widget-recent-posts-with-fi li span.nh-date:before { font-family: "Font Awesome 5 Free"; content: "\f073"; padding-right: 10px; font-weight: 700; }
-.niche-hero-widget-recent-posts-with-fi li .nh-meta-data a.nh-read-more { width: 50%; background: #eee; padding: 10px 25px; border-radius: 15px; text-decoration: none; color: #444; }
+.niche-hero-widget-recent-posts-with-fi li .nh-meta-data a.nh-read-more { width: 40%; display: inline-block; background: #eee; padding: 10px 25px; border-radius: 15px; text-decoration: none; color: #444; }
 .niche-hero-widget-recent-posts-with-fi li .nh-meta-data a.nh-read-more:hover { opacity: 0.5; }
 .niche-hero-widget-recent-posts-with-fi li span.comment-number { position: absolute; top: 0; right: 0; color: #FFF !important; z-index: 1; padding: 10px 20px 0 0; font-weight: 500; text-shadow: 1px 1px #000; }
 .niche-hero-widget-recent-posts-with-fi span.comment-number:before { font-family: "Font Awesome 5 Free"; content: "\f075"; padding-right: 5px; font-weight: 700; }
@@ -101,7 +101,7 @@ section.nh-type-bar li { margin: 0; position: relative; list-style: none; overfl
 	section.niche-hero ul.niche-posts li.niche-post .nh-details .nh-avatar-box { padding: 0 !important; }
 	section.nh-3 { width: 100% !important; }
 	section.nh-2 { border: 5px solid transparent; }
-	section.nh-type-bar { width: 100% !important; padding: 0 25px !important; }
+	section.nh-type-bar { width: 100% !important; }
 	#site-header, #site-content, #site-footer, .header-footer-group { margin: 0 !important;  }
 	section.nh-1 ul.niche-posts li.first-niche-post, section.niche-hero ul.niche-posts li.second-niche-post, section.niche-hero ul.niche-posts li.third-niche-post { border: 0 !important; }	
 	span.nh-video-views, .nh-comment-number { float: left !important; width: 100% !important; }
@@ -143,6 +143,7 @@ section.nh-type-bar li { margin: 0; position: relative; list-style: none; overfl
 	section.niche-hero ul.niche-posts li.niche-post {min-height: 270px !important;}
 	section.niche-hero ul.niche-posts li.niche-post .nh-bg-placeholder,
 	section.niche-hero ul.niche-posts li.niche-post .nh-post-thumbnail { height: 110px !important; }
+	.niche-hero-widget-recent-posts-with-fi li .nh-meta-data a.nh-read-more { width: 100% !important; }
 }
 
 @media (max-width: 700px) {
