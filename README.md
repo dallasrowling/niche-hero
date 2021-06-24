@@ -6,7 +6,9 @@ Niche Hero is aptly named for its capability to be plugged into any industry web
 
 ## Requirements
 
-Niche Hero is currently only offered on **WordPress** but will be developed on other platforms in future.
+Niche Hero is currently only offered on **WordPress** but will be developed on other platforms in future. 
+
+**Current WordPress Version:** 1.0.5
 
 ## Usage
 
