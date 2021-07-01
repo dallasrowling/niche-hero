@@ -138,9 +138,9 @@ function niche_hero_shortcode( $atts = array() ) {
 			if(has_post_thumbnail($post['ID'])){
 				$nh_post_thumbnail = get_the_post_thumbnail_url($post['ID'],'full');
 			} else if (($display == 1 && ($key === 0 || $key === 1)) || ($display == 2 && ($key === 0 || $key === 1 || $key === 2))) { 
-				$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height_in_lead.';background:url('.plugin_dir_url( __FILE__ ).'assets/images/260x150.png)"></div>'; 
+				$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height_in_lead.';)"></div>'; 
 			} else {
-				$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height.';background:url('.plugin_dir_url( __FILE__ ).'assets/images/260x150.png)"></div>'; 			
+				$nh_post_thumbnail = '<div class="nh-bg-placeholder" style="height:'.$image_height.';"></div>'; 			
 			}
 			/* AUTHOR */
 			$author_id = get_post_field( 'post_author', $post['ID']);
