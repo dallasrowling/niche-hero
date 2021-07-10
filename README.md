@@ -3,7 +3,7 @@
 # Niche Hero
 
 Niche Hero is aptly named for its capability to be plugged into any industry website and provide beautifully-designed blocks in seconds. 
-** Official WordPress plugin page:** https://wordpress.org/plugins/niche-hero/
+** Official WordPress plugin page: **https://wordpress.org/plugins/niche-hero/**
 
 ## Requirements
 
