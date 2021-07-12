@@ -150,7 +150,7 @@ function niche_hero_shortcode( $atts = array() ) {
 				$nh_avatar = '<img src="'.get_avatar_url($post['ID'], ['size' => '44']).'"/><span class="author-tooltip">'.get_the_author_meta( 'display_name', $author_id ).'</span></div>';
 			}
 			/* ADD ALL AUTHORS TOGETHER */
-			if (($show_author == 1) && ($display == 1 && $key != 0 && $key != 1) || $display == 3 || ($display == 2 && $key != 0 && $key != 1 && $key != 2)) {
+			if (($show_author == 1) && (($display == 1 && $key != 0 && $key != 1) || $display == 3 || ($display == 2 && $key != 0 && $key != 1 && $key != 2))) {
 				$nh_detailed  = '<a href="'.get_permalink($post['ID']).'" class="nh-details">
 				<div class="nh-avatar-box">'.$nh_avatar.'<div class="nh-content">'. $nh_date . $nh_title . $nh_meta .'</div></a>';
 			} else {
